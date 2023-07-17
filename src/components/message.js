@@ -1,7 +1,7 @@
-import { Container,Group,Text ,MediaQuery,Box} from "@mantine/core";
-
+import { Container,Group,Text ,MediaQuery,Box,Avatar,CopyButton,Tooltip,ActionIcon} from "@mantine/core";
+import { TypeAnimation } from "react-type-animation";
+import { IconCopy,IconCheck } from "@tabler/icons-react";
 export function Copy(text){
-    console.log(text)
     return (
         <CopyButton value={text.text} timeout={2000}>
         {({ copied, copy }) => (
@@ -15,10 +15,10 @@ export function Copy(text){
     )
 }
 export function GPTMessage(message){
-    console.log(message)
     return(
         <Container>
             <Group position="left">
+                <Avatar src = "/src/GPT.png" radius={"xl"}/>
                 <Box 
                 sx={(theme)=>({
                     backgroundColor:"#99FFCC",
@@ -28,8 +28,16 @@ export function GPTMessage(message){
                 })
                 }
                 >
-                    <Text>{message.message}</Text>
+                        <TypeAnimation
+                            sequence={[message.message]}
+                            wrapper="span"
+                            speed={50}
+                            style={{ fontSize: '13m', display: 'inline-block' }}
+                            repeat={0}
+                        />   
+                    
                 </Box>
+                <Copy text = {message.message}/>
             </Group>
         </Container>
     )

@@ -1,79 +1,76 @@
-import {Container,Button,Text,Group,Input, AppShell, Navbar,createStyles,ScrollArea, Center, Box,useMantineColorScheme,ActionIcon  } from '@mantine/core'
+import {Container,Button,Text,Group,Input, AppShell, Navbar,createStyles,ScrollArea, Box,useMantineColorScheme,ActionIcon, Header ,MediaQuery,Burger, Drawer} from '@mantine/core'
 import { useState, useEffect } from 'react';
-import { sendMessage } from '@/utils/openai';
-import { GPTMessage,UserMessage} from '@/components/message'; //not done
-import { IconSun, IconMoonStars } from '@tabler/icons-react';
+import { IconSun, IconMoonStars,IconPlus,IconTrashFilled } from '@tabler/icons-react';
+import { Chat } from '@/components/chat';
 
 const useStyles = createStyles((theme) => ({
     nav: {   
         [theme.fn.smallerThan('sm')]: {
             display: 'none',
         },
-    },
-}))
-function Chat(){
-    const [INvalue, setValue] = useState('');
-    const [usermessage, setusermessage] = useState([]);
-    const [airespond,setairespond] = useState([]);
-    const [chat,setchat] = useState([]);
-    function handleKey(e){
-        if (e.key === "Enter") {
-            handleClick()
-          }
-    }
-    const handleClick = async (e) => {
-        if (INvalue != ""){
-            setusermessage([
-                ...usermessage,
-                {
-                  //id is the length of list
-                  id: usermessage.length + 1,
-                  message: INvalue,
-                  aim:await sendMessage(INvalue)
-                }
-              ]);
-              setValue("")
-        }
-    }
-     return(
-            <Container>
-                
-                    <Container sx={{width:"60vw", height:"35vw"}} style={{overflowY:"scroll"}}>
-                        <Container>
-                        {usermessage.map(m => 
-                        (
-                        <Container key={m.id}>     
-                            <UserMessage message={m.message}/>  
-                            <GPTMessage message={m.aim}/>
-                        </Container>
 
-                        )
-                        )}
-                        </Container>
-                    </Container>
-                    <Container position="center" my="xl" sx={{marginBottom:'0 auto',margin:'3%'}}>
-                    <Input onKeyDown = {handleKey} placeholder="type" value={INvalue} onChange={(event) => setValue(event.currentTarget.value)}
-                        rightSection= {
-                        <Button onClick ={e => {
-                            handleClick(); // Clear the text box
-                          }}  position="top-end"
-                          ></Button>
-                        }>
-                    </Input>  
-                    </Container>
-                </Container>
-     )
-}
+    },
+    chatbox: {
+        [theme.fn.largerThan('sm')]: {
+            width:"100%", 
+            height:"35vw",
+            overflowY:"scroll",
+            overflow: "hidden",
+        },
+        [theme.fn.smallerThan('sm')]: {
+            width:"100%",
+            height:"75%",
+        }
+    },
+    Input: {
+        [theme.fn.largerThan('sm')]:{
+            width:"65vw",
+        },
+        [theme.fn.smallerThan('sm')]:{
+            width:"75%"
+        }
+    },
+    hiddenMobile: {
+        [theme.fn.smallerThan('sm')]: {
+          display: 'none',
+        },
+      },
+    
+      hiddenDesktop: {
+        [theme.fn.largerThan('sm')]: {
+          display: 'none',
+        },
+      }
+}))
 function Body(){
-    const { classes } = useStyles();
+    const { classes,theme } = useStyles();
     const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+    const [opened, setOpened] = useState(false);
     return(
         <AppShell
-        navbar={
+            header={<Header>
+                    <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+                    <Burger
+                        opened={opened}
+                        onClick={() => setOpened((o) => !o)}
+                        size="sm"
+                        color={theme.colors.gray[6]}
+                        mr="xl"
+                    />
+                    </MediaQuery>
+                    <Drawer
+                        opened={opened}
+                        onClose={e=>setOpened(false)}
+                    ></Drawer>
+                    </Header>
+            }
+            navbarOffsetBreakpoint="sm"
+            navbar={
             <Navbar
                 height={'100%'}
                 p = 'xs'
                 width={{base:200}}
+                hidden={!opened}
                 className={classes.nav}
             >
                 <Navbar.Section mt="xs">
@@ -84,18 +81,22 @@ function Body(){
                             paddingBottom: theme.spacing.lg,
                             borderBottom: `${1}`,
       })}>
-                    <Group position="Center" >
+                    <Group position="Center" grow>
                         <Text color = {"#00CC66"} fw={500} fz= {"xl"}>FreeGPT</Text>
-                        <ActionIcon variant="default" onClick={() => toggleColorScheme()} size={30} sx={(theme)=>({
-                        })}>
-                            {colorScheme === 'dark' ? <IconSun size="1rem" /> : <IconMoonStars size="1rem" />}
-                        </ActionIcon>
+                        <Group position="right">
+                            <ActionIcon variant="default" onClick={() => toggleColorScheme()} size={30}>
+                                {colorScheme === 'dark' ? <IconSun size="1rem" /> : <IconMoonStars size="1rem" />}
+                            </ActionIcon>
+                        </Group>
                     </Group>
                     </Box>
                 </Navbar.Section>
                 <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
                     <Button fullWidth variant="outline">
-                        <Text>New Chat</Text>
+                        <Group position='center'>
+                            <IconPlus size="1rem"/>
+                            <Text>New Chat</Text>
+                        </Group>
                     </Button>
                 </Navbar.Section>
             </Navbar>
