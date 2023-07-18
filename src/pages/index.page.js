@@ -1,4 +1,4 @@
-import {Container,Button,Text,Group,Input, AppShell, Navbar,createStyles,ScrollArea, Box,useMantineColorScheme,ActionIcon, Header ,MediaQuery,Burger, Drawer} from '@mantine/core'
+import {Container,Button,Text,Group,Input, AppShell, Navbar,createStyles,ScrollArea, Box,useMantineColorScheme,ActionIcon, Header ,MediaQuery,Burger, Drawer, Center} from '@mantine/core'
 import { useState, useEffect } from 'react';
 import { IconSun, IconMoonStars,IconPlus,IconTrashFilled } from '@tabler/icons-react';
 import { Chat } from '@/components/chat';
@@ -48,22 +48,34 @@ function Body(){
     const [opened, setOpened] = useState(false);
     return(
         <AppShell
+            
             header={<Header>
-                    <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-                    <Burger
-                        opened={opened}
-                        onClick={() => setOpened((o) => !o)}
-                        size="sm"
-                        color={theme.colors.gray[6]}
-                        mr="xl"
-                    />
+                    <MediaQuery height = {60} largerThan="sm" styles={{ display: 'none' }} width={"100%"}>
+                    <Group className={classes.hiddenDesktop} grow>
+                        <Burger
+                            opened={opened}
+                            onClick={() => setOpened((o) => !o)}
+                            size="md"
+                            color={theme.colors.gray[6]}
+                            mr="xl"
+                        />
+                        <Center><Text color = {"#00CC66"} fw={500} fz= {"xl"}>FreeGPT</Text></Center>
+                        <Group position='right'>
+                            <ActionIcon variant="default" onClick={() => toggleColorScheme()} size={30}>
+                                {colorScheme === 'dark' ? <IconSun size="1rem" /> : <IconMoonStars size="1rem" />}
+                            </ActionIcon>
+                        </Group>
+                    </Group>
                     </MediaQuery>
+                    
                     <Drawer
                         opened={opened}
                         onClose={e=>setOpened(false)}
                     ></Drawer>
+
                     </Header>
             }
+            
             navbarOffsetBreakpoint="sm"
             navbar={
             <Navbar
@@ -100,7 +112,7 @@ function Body(){
                     </Button>
                 </Navbar.Section>
             </Navbar>
-        }>
+        }>              
             <Chat/>
         </AppShell>
     )

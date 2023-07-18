@@ -1,6 +1,7 @@
-import { Container,Group,Text ,MediaQuery,Box,Avatar,CopyButton,Tooltip,ActionIcon} from "@mantine/core";
+import { Container,Group,Text ,MediaQuery,Box,Avatar,CopyButton,Tooltip,ActionIcon,ColorScheme} from "@mantine/core";
 import { TypeAnimation } from "react-type-animation";
 import { IconCopy,IconCheck } from "@tabler/icons-react";
+const isDark = ColorScheme == "Dark";
 export function Copy(text){
     return (
         <CopyButton value={text.text} timeout={2000}>
@@ -21,7 +22,7 @@ export function GPTMessage(message){
                 <Avatar src = "/src/GPT.png" radius={"xl"}/>
                 <Box 
                 sx={(theme)=>({
-                    backgroundColor:"#99FFCC",
+                    backgroundColor:isDark? "#99FFCC":"green",
                     textAlign: 'center',
                     borderRadius: theme.radius.sm,
                     width: "20vw"
@@ -53,14 +54,14 @@ export function UserMessage(message){
             <Group position="right">
                 <Box 
                 sx={(theme)=>({
-                    backgroundColor:"#99FFCC",
+                    backgroundColor:isDark? "#99FFCC":"green",
                     textAlign: 'center',
                     borderRadius: theme.radius.sm,
                     width: l.toString() + "vw"
                 })
                 }
                 >
-                    <Text>{message.message}</Text>
+                    <Text color={isDark? "dark":"white"}>{message.message}</Text>
                 </Box>
             </Group>
         </Container>

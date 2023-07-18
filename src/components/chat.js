@@ -1,9 +1,9 @@
-import { Container,Group,ActionIcon,Input,Button,createStyles,Modal,Text,UnstyledButton} from "@mantine/core";
+import { Container,Group,ActionIcon,Input,Button,createStyles,Modal,Text,UnstyledButton,Badge, Center } from "@mantine/core";
 import { useState } from "react";
 import { sendMessage } from "@/utils/openai";
 import { UserMessage,GPTMessage } from "./message";
-import { IconTrashFilled,IconArrowBigRightFilled } from "@tabler/icons-react";
-import { Tex } from "tabler-icons-react";
+import { IconTrashFilled,IconArrowBigRightFilled,} from "@tabler/icons-react";
+import { AlertTriangle,FreeRights, Space } from "tabler-icons-react";
 const useStyles = createStyles((theme) => ({
     chatbox: {
         [theme.fn.largerThan('sm')]: {
@@ -14,7 +14,7 @@ const useStyles = createStyles((theme) => ({
         },
         [theme.fn.smallerThan('sm')]: {
             width:"100%",
-            height:"75%",
+            height:"85%",
         }
     },
     Input: {
@@ -22,7 +22,7 @@ const useStyles = createStyles((theme) => ({
             width:"65vw",
         },
         [theme.fn.smallerThan('sm')]:{
-            width:"75%"
+            
         }
     },
     hiddenMobile: {
@@ -37,11 +37,23 @@ const useStyles = createStyles((theme) => ({
         },
       }
 }))
+function DefaultPage(){
+    const {classes} = useStyles();
+    return(
+            <Container style={{width:"70%"}}>
+                <Badge color="green">GPT 3</Badge>
+                <Text fw={500} fz={45}>FreeGPT</Text>   
+                <Text fw={500} fz = {20}>免費的ChatGPT</Text>
+            </Container>
+    )
+}
 export function Chat(){
     const [INvalue, setValue] = useState('');
     const [usermessage, setusermessage] = useState([]);
     const {classes} = useStyles();
-    const [opened,setOpened] = useState(false)
+    const [opened,setOpened] = useState(false);
+    const [isType,setisTyped] = useState(false);
+    
     function handleKey(e){
         if (e.key === "Enter") {
             handleClick()
@@ -58,6 +70,7 @@ export function Chat(){
                   aim:await sendMessage(INvalue)
                 }
               ]);
+              setisTyped(true);
               setValue("")
         }
     }
@@ -68,9 +81,12 @@ export function Chat(){
      return(
             <div style={{width:"100%",height:"100%"}}>
                     <Modal opened = {opened} onClose={e=>setOpened(false)} centered>
-                        <Text>
-                            是否要清理對話
-                        </Text>
+                        <Group position="top">
+                            <AlertTriangle size={48} strokeWidth={2} color={'#40bf54'}/>
+                            <Text>
+                                是否要清理對話
+                            </Text>
+                        </Group>
                         <Group position="right">
                             <Button variant ="default" onClick={e=>setOpened(false)}>
                                 <Text>否</Text>
@@ -80,6 +96,10 @@ export function Chat(){
                             </Button>
                         </Group>
                     </Modal>
+                    
+                    <Container style={{position:isType?"relative":"absolute",display:isType?"none":"flex",width:"100%"}} className={classes.chatbox}> 
+                        <DefaultPage/>
+                    </Container>
                     <Container className={classes.chatbox}>
                         <Container>
                         {usermessage.map(m => 
@@ -99,7 +119,19 @@ export function Chat(){
                                 <IconTrashFilled size="1.125rem" />
                             </ActionIcon>
                             <Group grow>
-                                <Input className={classes.Input} onKeyDown = {handleKey} placeholder="type" value={INvalue} onChange={(event) => setValue(event.currentTarget.value)}
+                                <Input 
+                                styles={(theme) => ({
+                                    input: {
+                                      '&:focus-within': {
+                                        borderColor: theme.colors.green[7],
+                                      },
+                                    },
+                                  })}
+                                className={classes.Input}
+                                onKeyDown = {handleKey} 
+                                placeholder="type" 
+                                value={INvalue} 
+                                onChange={(event) => setValue(event.currentTarget.value)}
                                 rightSection= {        
                                 <UnstyledButton variant = "subtle" onClick ={e => {
                                     handleClick(); // Clear the text box

@@ -11,6 +11,7 @@ export const sendMessage = async (messages) => {
       messages: [{role: "user", content: messages}],
       max_tokens:4000
   });
+  console.log(body)
   return body.data.choices[0].message.content
   }
 //error handles not yet done

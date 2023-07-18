@@ -5,7 +5,7 @@ import { useState } from 'react';
 export default function App({ Component, pageProps }) {
   const [colorScheme, setColorScheme] = useState('light');
   const toggleColorScheme = (theme) =>
-    setColorScheme(colorScheme === 'dark' ? 'light' : 'dark');
+    setColorScheme(colorScheme === 'dark' ? 'gray' : 'dark');
   return (
   
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
