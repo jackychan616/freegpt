@@ -61,7 +61,7 @@ export function UserMessage(message){
                 })
                 }
                 >
-                    <Text color={isDark? "dark":"white"}>{message.message}</Text>
+                    <Text>{message.message}</Text>
                 </Box>
             </Group>
         </Container>

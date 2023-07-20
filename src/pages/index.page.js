@@ -1,7 +1,8 @@
-import {Container,Button,Text,Group,Input, AppShell, Navbar,createStyles,ScrollArea, Box,useMantineColorScheme,ActionIcon, Header ,MediaQuery,Burger, Drawer, Center} from '@mantine/core'
+import {Container,Button,Text,Group,Input, AppShell, Navbar,createStyles,ScrollArea, Box,useMantineColorScheme,ActionIcon, Header ,MediaQuery,Burger, Drawer, Center, Modal} from '@mantine/core'
 import { useState, useEffect } from 'react';
-import { IconSun, IconMoonStars,IconPlus,IconTrashFilled } from '@tabler/icons-react';
+import { IconSun, IconMoonStars,IconPlus,IconTrashFilled,IconSettings2 } from '@tabler/icons-react';
 import { Chat } from '@/components/chat';
+import { Setting } from '@/components/setting';
 
 const useStyles = createStyles((theme) => ({
     nav: {   
@@ -46,6 +47,7 @@ function Body(){
     const { classes,theme } = useStyles();
     const { colorScheme, toggleColorScheme } = useMantineColorScheme();
     const [opened, setOpened] = useState(false);
+    const [settingopened,setsettingopened] = useState(false);
     return(
         <AppShell
             
@@ -110,6 +112,16 @@ function Body(){
                             <Text>New Chat</Text>
                         </Group>
                     </Button>
+                </Navbar.Section>
+                <Navbar.Section>
+                    <Button onClick={e=>setsettingopened(true)}>
+                        <ActionIcon>
+                            <IconSettings2 size="1.125rem"/>
+                        </ActionIcon>
+                    </Button>
+                    <Modal opened={settingopened} onClose={e=>setsettingopened(false)} centered>
+                        <Setting/>
+                    </Modal>
                 </Navbar.Section>
             </Navbar>
         }>              
