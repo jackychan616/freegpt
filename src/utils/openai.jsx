@@ -11,7 +11,12 @@ export const sendMessage = async (messages) => {
       messages: [{role: "user", content: messages}],
       max_tokens:4000
   });
-  console.log(body)
-  return body.data.choices[0].message.content
+  if (body.request["status"] != 200){
+    const errormessage = "網站擠擁 , 請稍後再試"
+    return errormessage
   }
-//error handles not yet done
+  else {
+    return body.data.choices[0].message.content
+  }
+}
+//error handles 50%

@@ -1,7 +1,7 @@
-import { Container,Group,Text ,MediaQuery,Box,Avatar,CopyButton,Tooltip,ActionIcon,ColorScheme} from "@mantine/core";
+import { Container,Group,Text ,MediaQuery,Box,Avatar,CopyButton,Tooltip,ActionIcon ,createStyles} from "@mantine/core";
 import { TypeAnimation } from "react-type-animation";
 import { IconCopy,IconCheck } from "@tabler/icons-react";
-const isDark = ColorScheme == "Dark";
+
 export function Copy(text){
     return (
         <CopyButton value={text.text} timeout={2000}>
@@ -17,15 +17,17 @@ export function Copy(text){
 }
 export function GPTMessage(message){
     return(
-        <Container>
             <Group position="left">
                 <Avatar src = "/src/GPT.png" radius={"xl"}/>
                 <Box 
                 sx={(theme)=>({
-                    backgroundColor:isDark? "#99FFCC":"green",
+                    backgroundColor:"green",
                     textAlign: 'center',
                     borderRadius: theme.radius.sm,
-                    width: "20vw"
+                    width: "20vw",
+                    [theme.fn.smallerThan('sm')] : {
+                        width:"50vw"
+                    }
                 })
                 }
                 >
@@ -40,7 +42,6 @@ export function GPTMessage(message){
                 </Box>
                 <Copy text = {message.message}/>
             </Group>
-        </Container>
     )
 }
 export function UserMessage(message){
@@ -54,10 +55,13 @@ export function UserMessage(message){
             <Group position="right">
                 <Box 
                 sx={(theme)=>({
-                    backgroundColor:isDark? "#99FFCC":"green",
+                    backgroundColor:"green",
                     textAlign: 'center',
                     borderRadius: theme.radius.sm,
-                    width: l.toString() + "vw"
+                    width: l.toString() + "vw",
+                    [theme.fn.smallerThan('sm')]:{
+                        width:"20vw"
+                    }
                 })
                 }
                 >

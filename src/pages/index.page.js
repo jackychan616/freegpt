@@ -50,7 +50,6 @@ function Body(){
     const [settingopened,setsettingopened] = useState(false);
     return(
         <AppShell
-            
             header={<Header>
                     <MediaQuery height = {60} largerThan="sm" styles={{ display: 'none' }} width={"100%"}>
                     <Group className={classes.hiddenDesktop} grow>
@@ -77,7 +76,6 @@ function Body(){
 
                     </Header>
             }
-            
             navbarOffsetBreakpoint="sm"
             navbar={
             <Navbar
@@ -125,7 +123,7 @@ function Body(){
                 </Navbar.Section>
             </Navbar>
         }>              
-            <Chat/>
+                <Chat/>
         </AppShell>
     )
 }

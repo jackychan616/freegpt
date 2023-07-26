@@ -1,9 +1,9 @@
-import { Container,Group,ActionIcon,Input,Button,createStyles,Modal,Text,UnstyledButton,Badge, Center } from "@mantine/core";
+import { Container,Group,ActionIcon,Input,Button,createStyles,Modal,Text,UnstyledButton,Badge, Center,Space } from "@mantine/core";
 import { useState } from "react";
 import { sendMessage } from "@/utils/openai";
 import { UserMessage,GPTMessage } from "./message";
 import { IconTrashFilled,IconArrowBigRightFilled,} from "@tabler/icons-react";
-import { AlertTriangle,FreeRights, Space } from "tabler-icons-react";
+import { AlertTriangle,FreeRights } from "tabler-icons-react";
 const useStyles = createStyles((theme) => ({
     chatbox: {
         [theme.fn.largerThan('sm')]: {
@@ -11,10 +11,13 @@ const useStyles = createStyles((theme) => ({
             height:"35vw",
             overflowY:"scroll",
             overflow: "hidden",
+            
         },
         [theme.fn.smallerThan('sm')]: {
             width:"100%",
             height:"85%",
+            position:"relative",
+            top:"10vw"
         }
     },
     Input: {
@@ -40,11 +43,20 @@ const useStyles = createStyles((theme) => ({
 function DefaultPage(){
     const {classes} = useStyles();
     return(
-            <Container style={{width:"70%"}}>
+        <div>
+            <Container style={{width:"100%"}} className={classes.hiddenMobile}>
                 <Badge color="green">GPT 3</Badge>
                 <Text fw={500} fz={45}>FreeGPT</Text>   
                 <Text fw={500} fz = {20}>免費的ChatGPT</Text>
             </Container>
+            <Center className={classes.hiddenDesktop} style={{height:"60%"}}>
+                <Container style={{width:"100%"}}>
+                <Badge color="green">GPT 3</Badge>
+                <Text fw={500} fz={45}>FreeGPT</Text>   
+                <Text fw={500} fz = {20}>免費的ChatGPT</Text>
+                </Container>
+            </Center>
+        </div>
     )
 }
 export function Chat(){
@@ -77,6 +89,7 @@ export function Chat(){
     const Trash = (e) => {
         setusermessage([]);
         setOpened(false);
+        setisTyped(false)
     }
      return(
             <div style={{width:"100%",height:"100%"}}>
@@ -100,19 +113,18 @@ export function Chat(){
                     <Container style={{position:isType?"relative":"absolute",display:isType?"none":"flex",width:"100%"}} className={classes.chatbox}> 
                         <DefaultPage/>
                     </Container>
-                    <Container className={classes.chatbox}>
-                        <Container>
+                    <div className={classes.chatbox}>
                         {usermessage.map(m => 
                         (
-                        <Container key={m.id}>     
+                        <div key={m.id}>     
                             <UserMessage message={m.message}/>  
+                            <Space h="md"/>
                             <GPTMessage message={m.aim}/>
-                        </Container>
+                        </div>
 
                         )
                         )}
-                        </Container>
-                    </Container>
+                    </div>
                     <Container position="center" my="xl" sx={{marginBottom:'0 auto',margin:'3%'}}>
                         <Group >
                             <ActionIcon onClick={e=>setOpened(true)}>
@@ -134,7 +146,7 @@ export function Chat(){
                                 onChange={(event) => setValue(event.currentTarget.value)}
                                 rightSection= {        
                                 <UnstyledButton variant = "subtle" onClick ={e => {
-                                    handleClick(); // Clear the text box
+                                        handleClick(); // Clear the text box
                                     }}  position="top-end">
                                     <IconArrowBigRightFilled size="1.125rem"/>
                                 </UnstyledButton>
