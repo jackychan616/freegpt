@@ -18,28 +18,19 @@ export function Copy(text){
 export function GPTMessage(message){
     return(
             <Group position="left">
-                <Avatar src = "/src/GPT.png" radius={"xl"}/>
-                <Box 
-                sx={(theme)=>({
-                    backgroundColor:"green",
-                    textAlign: 'center',
-                    borderRadius: theme.radius.sm,
-                    width: "20vw",
-                    [theme.fn.smallerThan('sm')] : {
-                        width:"50vw"
-                    }
-                })
-                }
-                >
-                        <TypeAnimation
+                    <Avatar src = "/src/GPT.png" radius={"xl"}/>
+                    <Container sx={{justifyItems:'left',margin:'0',
+                    display:'flex',
+                    borderRadius:'5px',height:'100%',
+                    width:'fit-content',padding:'1.5%',marginTop:'0.5%',backgroundColor:"green",}}>
+                    <TypeAnimation
                             sequence={[message.message]}
                             wrapper="span"
                             speed={50}
                             style={{ fontSize: '13m', display: 'inline-block' }}
                             repeat={0}
-                        />   
-                    
-                </Box>
+                        />
+                    </Container>          
                 <Copy text = {message.message}/>
             </Group>
     )
@@ -53,20 +44,13 @@ export function UserMessage(message){
     return(
         <Container>
             <Group position="right">
-                <Box 
-                sx={(theme)=>({
-                    backgroundColor:"green",
-                    textAlign: 'center',
-                    borderRadius: theme.radius.sm,
-                    width: l.toString() + "vw",
-                    [theme.fn.smallerThan('sm')]:{
-                        width:"20vw"
-                    }
-                })
-                }
-                >
+                <Container sx={{justifyItems:'left',margin:'0',
+                    display:'flex',
+                    borderRadius:'5px',height:'100%',
+                    width:'fit-content',padding:'1.5%',marginTop:'0.5%',backgroundColor:"green",}}>
                     <Text>{message.message}</Text>
-                </Box>
+                </Container>
+                <Avatar src="/src/Userprofile.png" radius={"xl"}/>           
             </Group>
         </Container>
     )

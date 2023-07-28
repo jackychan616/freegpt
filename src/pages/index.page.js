@@ -1,6 +1,6 @@
-import {Container,Button,Text,Group,Input, AppShell, Navbar,createStyles,ScrollArea, Box,useMantineColorScheme,ActionIcon, Header ,MediaQuery,Burger, Drawer, Center, Modal} from '@mantine/core'
+import {Container,Button,Text,Group,Input, AppShell, Navbar,createStyles,ScrollArea, Box,useMantineColorScheme,ActionIcon, Header ,MediaQuery,Burger, Drawer, Center, Modal,Divider} from '@mantine/core'
 import { useState, useEffect } from 'react';
-import { IconSun, IconMoonStars,IconPlus,IconTrashFilled,IconSettings2 } from '@tabler/icons-react';
+import { IconSun, IconMoonStars,IconPlus,IconTrashFilled,IconSettings2,IconBrandGithub } from '@tabler/icons-react';
 import { Chat } from '@/components/chat';
 import { Setting } from '@/components/setting';
 
@@ -72,16 +72,18 @@ function Body(){
                     <Drawer
                         opened={opened}
                         onClose={e=>setOpened(false)}
-                    ></Drawer>
+                    >
+                        
+                    </Drawer>
 
                     </Header>
             }
             navbarOffsetBreakpoint="sm"
             navbar={
             <Navbar
-                height={'100%'}
+                height={"100%"}
                 p = 'xs'
-                width={{base:200}}
+                width={{base:300}}
                 hidden={!opened}
                 className={classes.nav}
             >
@@ -92,7 +94,7 @@ function Body(){
                             paddingRight: theme.spacing.xs,
                             paddingBottom: theme.spacing.lg,
                             borderBottom: `${1}`,
-      })}>
+                    })}>
                     <Group position="Center" grow>
                         <Text color = {"#00CC66"} fw={500} fz= {"xl"}>FreeGPT</Text>
                         <Group position="right">
@@ -101,22 +103,30 @@ function Body(){
                             </ActionIcon>
                         </Group>
                     </Group>
+                    <Divider my="md"/>
                     </Box>
                 </Navbar.Section>
                 <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
+                    <Container>
                     <Button fullWidth variant="outline">
                         <Group position='center'>
                             <IconPlus size="1rem"/>
                             <Text>New Chat</Text>
                         </Group>
                     </Button>
+                    </Container>
+                    
                 </Navbar.Section>
                 <Navbar.Section>
-                    <Button onClick={e=>setsettingopened(true)}>
-                        <ActionIcon>
+                    <Divider my="xl"/>
+                    <Group style = {{position:"relative",bottom:"10px"}}>
+                        <ActionIcon onClick={e=>setsettingopened(true)}>
                             <IconSettings2 size="1.125rem"/>
                         </ActionIcon>
-                    </Button>
+                        <ActionIcon>
+                            <IconBrandGithub size="1.125rem"/>
+                        </ActionIcon>
+                    </Group>
                     <Modal opened={settingopened} onClose={e=>setsettingopened(false)} centered>
                         <Setting/>
                     </Modal>
