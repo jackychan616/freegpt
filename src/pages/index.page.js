@@ -96,7 +96,7 @@ function Body(){
                             borderBottom: `${1}`,
                     })}>
                     <Group position="Center" grow>
-                        <Text color = {"#00CC66"} fw={500} fz= {"xl"}>FreeGPT</Text>
+                        <Text color = {"#00CC66"} fw={500} fz= {30}>FreeGPT</Text>
                         <Group position="right">
                             <ActionIcon variant="default" onClick={() => toggleColorScheme()} size={30}>
                                 {colorScheme === 'dark' ? <IconSun size="1rem" /> : <IconMoonStars size="1rem" />}
@@ -110,6 +110,7 @@ function Body(){
                     <Container>
                     <Button fullWidth variant="outline">
                         <Group position='center'>
+                            
                             <IconPlus size="1rem"/>
                             <Text>New Chat</Text>
                         </Group>
@@ -121,10 +122,10 @@ function Body(){
                     <Divider my="xl"/>
                     <Group style = {{position:"relative",bottom:"10px"}}>
                         <ActionIcon onClick={e=>setsettingopened(true)}>
-                            <IconSettings2 size="1.125rem"/>
+                            <IconSettings2 color="green" size="1.125rem"/>
                         </ActionIcon>
                         <ActionIcon>
-                            <IconBrandGithub size="1.125rem"/>
+                            <IconBrandGithub color="green" size="1.125rem"/>
                         </ActionIcon>
                     </Group>
                     <Modal opened={settingopened} onClose={e=>setsettingopened(false)} centered>

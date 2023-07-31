@@ -65,15 +65,27 @@ export function Chat(){
     const {classes,theme} = useStyles();
     const [opened,setOpened] = useState(false);
     const [isType,setisTyped] = useState(false);
-
+    const [onTyping,setontyping] = useState(false)
     function handleKey(e){
         if (e.key === "Enter") {
             handleClick();
           }
     }
     const handleClick = async (e) => {
-        if (INvalue != ""){
-            var res = await sendMessage(INvalue);
+        setontyping(true);
+        const tempvalue = INvalue;
+        setValue("");
+        if (tempvalue != ""){
+            var res = await sendMessage(tempvalue);
+            setusermessage([
+                ...usermessage,
+                {
+                  //id is the length of list
+                  id: usermessage.length + 1,
+                  message: tempvalue,
+                  aim:res
+                }
+              ]);
             setaimessage([
                 ...aimessage,
                 {
@@ -81,23 +93,19 @@ export function Chat(){
                     message: res
                 }
             ]);
-            setusermessage([
-                ...usermessage,
-                {
-                  //id is the length of list
-                  id: usermessage.length + 1,
-                  message: INvalue,
-                  aim:res
-                }
-              ]);
               setisTyped(true);
-              setValue("")
+              setontyping(false);
         }
     }
     const Trash = (e) => {
         setusermessage([]);
         setOpened(false);
         setisTyped(false)
+    }
+    const Status = async (e)=>{
+        e=>setontyping(true);
+        console.log(onTyping)
+        var timeoutID = setTimeout(setontyping(false), 5000);
     }
     const messagesEndRef = useRef(null);
     const scrollToBottom = () => {
@@ -127,28 +135,28 @@ export function Chat(){
                     <Container style={{position:isType?"relative":"absolute",display:isType?"none":"flex",width:"100%",top:"15%"}}> 
                         <DefaultPage/>
                     </Container>
-                    <Container className={classes.chatbox}>
+                    <div className={classes.chatbox}>
                         {usermessage.map(m => 
                         (
-                        <Container fluid sx={{margin:'0'}} key={m.id} ref={messagesEndRef}>     
+                        <div fluid sx={{margin:'0'}} key={m.id} ref={messagesEndRef}>     
                             <UserMessage message={m.message}/>  
                             <Space h="md"/>
                             <GPTMessage message={m.aim}/>
                             <Space h="md"/>
-                        </Container>
+                        </div>
                         )
                         )}
-                    </Container>     
+                    </div>     
                     <Group sx={{marginBottom:'0 auto',margin:'2%'}} style={{position:"absolute"}}>
                                 <div className={classes.hiddenMobile}>
                                     <ActionIcon onClick={e=>setOpened(true)}>
-                                        <IconTrashFilled size="24" />
+                                        <IconTrashFilled color="green" size="24" />
                                     </ActionIcon>
                                 </div>
                                 <Container>
                                 <div className={classes.hiddenDesktop}>
                                     <ActionIcon onClick={e=>setOpened(true)}>
-                                        <IconTrashFilled size="24" />
+                                        <IconTrashFilled color="green" size="24" />
                                     </ActionIcon>
                                 </div>
                                 <Input 
@@ -163,7 +171,7 @@ export function Chat(){
                                 onKeyDown = {handleKey} 
                                 placeholder="輸入訊息" 
                                 value={INvalue} 
-                                onChange={(event) => setValue(event.currentTarget.value)}
+                                onChange={(event) => setValue(event.currentTarget.value) }
                                 rightSection= {        
                                 <ActionIcon variant = "subtle" onClick ={e => {
                                         handleClick(); // Clear the text box
@@ -174,6 +182,9 @@ export function Chat(){
                                 }>
                                 </Input>
                                 </Container>
+                                <Group style={{display:onTyping?"flex":"none"}}>
+                                    <Text>FreeGPT is thinking ...</Text>
+                                </Group>
                     </Group>
                 </div>
      )

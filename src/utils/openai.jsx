@@ -1,8 +1,7 @@
-
+// const Codemessage = res.split('```').pop().split('```')[0]
 export const sendMessage = async (messages) => {
     const { Configuration, OpenAIApi } = require("openai");
     const api = localStorage.getItem('api-key')
-    console.log(api)
     const configuration = new Configuration({
         apiKey: "sk-vvGBBOfVq6aRewvyldj2m9Ev7ITBSQEf6u0K1qiaKg90OhOq",
         basePath: "https://api.chatanywhere.cn/v1"
@@ -13,7 +12,8 @@ export const sendMessage = async (messages) => {
         messages: [{role: "user", content: messages}],
         max_tokens:4000
     });
-    return body.data.choices[0].message.content
+    const res = body.data.choices[0].message.content; 
+    return res
 
 }
 //error handles 50%

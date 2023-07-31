@@ -26,7 +26,7 @@ export function GPTMessage(message){
                     <TypeAnimation
                             sequence={[message.message]}
                             wrapper="span"
-                            speed={50}
+                            speed={100}
                             style={{ fontSize: '13m', display: 'inline-block' }}
                             repeat={0}
                         />
