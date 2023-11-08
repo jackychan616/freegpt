@@ -4,7 +4,7 @@ export const sendMessage = async (messages) => {
     const api = localStorage.getItem('api-key')
     const configuration = new Configuration({
         apiKey: "sk-vvGBBOfVq6aRewvyldj2m9Ev7ITBSQEf6u0K1qiaKg90OhOq",
-        basePath: "https://api.chatanywhere.cn/v1"
+        basePath: "https://api.chatanywhere.com.cn/v1"
     });
     const openai = new OpenAIApi(configuration);
     const body = await openai.createChatCompletion({
@@ -16,4 +16,4 @@ export const sendMessage = async (messages) => {
     return res
 
 }
-//error handles 50%
+//error handles 50%     

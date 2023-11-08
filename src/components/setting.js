@@ -4,20 +4,21 @@ import { useLocalStorage } from '@mantine/hooks';
 import { useState } from "react";
 import { Configuration, OpenAIApi } from "openai";
 
-const Iskey = async () => {
+const Iskey = async (apiKey) => {
     const configuration = new Configuration({
-        apiKey: "sk-vvGBBOfVq6aRewvyldj2m9Ev7ITBSQEf6u0K1qiaKg90OhOq",
+        apiKey: apiKey,
     });
     const openai = new OpenAIApi(configuration);
     const response = await openai.Modal.list()
     console.log(response)
 }
+
 export function Setting(){
-    const [apikey,setapikey] =useLocalStorage({
-        key:"api-key",
-        defaultValue:"sk-vvGBBOfVq6aRewvyldj2m9Ev7ITBSQEf6u0K1qiaKg90OhOq"
-    })
     const [keyvalue,setkeyvalue] = useState([]);
+    const [apikey,setapikey] =useLocalStorage({
+    key:"api-key",
+    defaultValue:"sk-vvGBBOfVq6aRewvyldj2m9Ev7ITBSQEf6u0K1qiaKg90OhOq"
+    })
     return(
         <Container>
                 <Text>Openai api key</Text>
@@ -30,14 +31,14 @@ export function Setting(){
                             />
                         </Group>
                         <Group position="right">
-                            <Button size = "xs" onClick={(event)=>setapikey(keyvalue)}></Button>
+                            <Button size = "xs" onClick={(event)=>Key(keyvalue)}></Button>
                         </Group>
                 </Group>
                 <Text>OpenAi type</Text>
                 <Input component="select" rightSection={<IconChevronDown size={14} stroke={1.5}/>}>
                     <option value = "openai">openai</option>
-                    <option value="otherai">Other Ai</option>
-                </Input>
+                    <option value=" otherai">Other Ai</option>
+                </Input>    
         </Container>
-    )
+        )
 }
