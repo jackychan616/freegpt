@@ -26,7 +26,7 @@ const useStyles = createStyles((theme) => ({
         },
         [theme.fn.smallerThan('sm')]: {
             width:"100%",
-            height:"110vw",
+            height:"130vw",
             top:"10vw",
             overflowY:"scroll"
         },
@@ -162,7 +162,7 @@ export function Chat(){
             scrollToBottom()
             }, [aimessage]);
      return(
-        <>
+        <Center>
                 <div style={{width:"100%",height:"100%",backgroundColor: "rgba(39, 202, 88, 0.1)"}}>
                     <Modal title="清理對話" opened = {opened} onClose={e=>setOpened(false)} centered>
                         <Group position="top">
@@ -187,6 +187,7 @@ export function Chat(){
                         {usermessage.map(m => 
                         (
                         <div fluid sx={{margin:'0'}} key={m.id} ref={messagesEndRef}>     
+                            <Space h = "lg"/>
                             <UserMessage message={m.message}/>  
                             <Space h="md"/>
                             <GPTMessage message={m.aim}/>
@@ -237,6 +238,6 @@ export function Chat(){
                     <Text>FreeGPT is thinking ...</Text>
                 </Group>
             </Group>
-        </>
+        </Center>
      )
 }
