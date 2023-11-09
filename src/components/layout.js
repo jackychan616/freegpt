@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { IconSun, IconMoonStars,IconPlus,IconTrashFilled,IconSettings2,IconBrandGithub } from '@tabler/icons-react';
 import { Chat } from '@/components/chat';
 import { Setting } from '@/components/setting';
-import Head from 'next/head';
+import { Metadata } from 'next'
 
 const useStyles = createStyles((theme) => ({
     nav: {   
@@ -44,13 +44,7 @@ const useStyles = createStyles((theme) => ({
         },
       }
 }))
-export const metadata = {
-    title: 'FreeGpt',
-    openGraph: {
-      title: 'FreeGpt',
-      description: 'A strong , free Ai chat services',
-    },
-  }
+
 export function Layout(){
     const { classes,theme } = useStyles();
     const { colorScheme, toggleColorScheme } = useMantineColorScheme();
@@ -58,9 +52,6 @@ export function Layout(){
     const [settingopened,setsettingopened] = useState(false);
     return(
         <>
-        <Head>
-            <title>FreeGPT</title>
-        </Head>
         <AppShell
             header={<Header>
                     <MediaQuery height = {60} largerThan="sm" styles={{ display: 'none' }} width={"100%"}>
