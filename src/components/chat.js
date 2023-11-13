@@ -1,4 +1,4 @@
-import { Container,Group,ActionIcon,Input,Button,createStyles,Modal,Text,UnstyledButton,Badge, Center,Space, SimpleGrid, Card } from "@mantine/core";
+import { Container,Group,ActionIcon,Input,Button,createStyles,Modal,Text,UnstyledButton,Badge, Center,Space, SimpleGrid, Card,Loader  } from "@mantine/core";
 import { useState,useEffect,useRef  } from "react";
 import { sendMessage } from "@/utils/openai";
 import { UserMessage,GPTMessage } from "./message";
@@ -195,7 +195,10 @@ export function Chat(){
                         </div>
                         )  
                         )}
-                    </div>     
+                    </div>   
+                    <Center style={{display:onTyping?"flex":"none",bottom:"0px"}}>
+                                <Loader color="green" variant="dots"/>
+                    </Center>  
                 </div>
                 <Group style={{position:"absolute",bottom:"20px"}}>
                 <div className={classes.hiddenMobile}>
@@ -234,9 +237,6 @@ export function Chat(){
                 </Input>
                 </div>
                 </Container>
-                <Group style={{display:onTyping?"flex":"none"}}>
-                    <Text>FreeGPT is thinking ...</Text>
-                </Group>
             </Group>
         </Center>
      )

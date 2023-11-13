@@ -1,5 +1,8 @@
 // const Codemessage = res.split('```').pop().split('```')[0]
+const chat_messages = [];
 export const sendMessage = async (messages) => {
+    chat_messages.push({role: "user", content: messages});
+    console.log(chat_messages)
     const { Configuration, OpenAIApi } = require("openai");
     const api = localStorage.getItem('api-key')
     const configuration = new Configuration({
@@ -9,11 +12,16 @@ export const sendMessage = async (messages) => {
     const openai = new OpenAIApi(configuration);
     const body = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
-        messages: [{role: "user", content: messages}],
+        messages: chat_messages,
         max_tokens:4000
     });
-    const res = body.data.choices[0].message.content; 
-    return res
+    const res = body.data.choices[0].message
+    chat_messages.push(res)
+    return res.content
 
 }
+//export const Image_gen = async (messages) => {
+
+//}
+
 //error handles 50%     
