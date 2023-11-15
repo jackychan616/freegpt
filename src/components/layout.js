@@ -1,9 +1,17 @@
 import {Container,Button,Text,Group,Input, AppShell, Navbar,createStyles,ScrollArea, Box,useMantineColorScheme,ActionIcon, Header ,MediaQuery,Burger, Drawer, Center, Modal,Divider} from '@mantine/core'
 import { useState, useEffect } from 'react';
 import { IconSun, IconMoonStars,IconPlus,IconTrashFilled,IconSettings2,IconBrandGithub } from '@tabler/icons-react';
-import { Chat } from '@/components/chat';
+import {Chat} from '@/components/Services/chat';
+import { Image_gen } from './Services/Image_genrate';
 import { Setting } from '@/components/setting';
 import { Metadata } from 'next'
+import Link from 'next/link';
+import { Tab } from "@headlessui/react";
+import classNames from 'classnames';
+import { useRouter } from 'next/router';
+
+
+
 
 const useStyles = createStyles((theme) => ({
     nav: {   
@@ -45,13 +53,27 @@ const useStyles = createStyles((theme) => ({
       }
 }))
 
-export function Layout(){
+export function Layout(props){
     const { classes,theme } = useStyles();
     const { colorScheme, toggleColorScheme } = useMantineColorScheme();
     const [opened, setOpened] = useState(false);
     const [settingopened,setsettingopened] = useState(false);
+    const tabs = ["profile", "subscription", "settings"];
+                /*<Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
+                    <Container>
+                    <Button fullWidth variant="outline">
+                        <Group position='center'>
+                            
+                            <IconPlus size="1rem"/>
+                            <Text>New Chat</Text>
+                        </Group>
+                    </Button>
+                    </Container>
+                    
+                </Navbar.Section>*/
     return(
-        <>
+        <Tab.Group>
+        
         <AppShell
             header={<Header>
                     <MediaQuery height = {60} largerThan="sm" styles={{ display: 'none' }} width={"100%"}>
@@ -109,18 +131,12 @@ export function Layout(){
                     </Box>
                 </Navbar.Section>
                 <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
-                    <Container>
-                    <Button fullWidth variant="outline">
-                        <Group position='center'>
-                            
-                            <IconPlus size="1rem"/>
-                            <Text>New Chat</Text>
-                        </Group>
-                    </Button>
-                    </Container>
-                    
+                <Tab.List>
+                {tabs.map((tab) => (
+                  <Tab key={tab}>{tab + "/"}</Tab>
+                ))}
+                </Tab.List>
                 </Navbar.Section>
-                
                 <Navbar.Section>
                     <Divider my="xl"/>
                     <Group style = {{position:"relative",bottom:"10px"}}>
@@ -136,9 +152,13 @@ export function Layout(){
                     </Modal>
                 </Navbar.Section>
             </Navbar>
-        }>              
-                <Chat/>
+        }>    
+            <Tab.Panels>
+                <Tab.Panel><Chat/></Tab.Panel>
+                <Tab.Panel><Image_gen/></Tab.Panel>
+                <Tab.Panel>Settings Content</Tab.Panel>
+            </Tab.Panels> 
         </AppShell>
-        </>
+        </Tab.Group>
     )
 }

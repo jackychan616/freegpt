@@ -1,7 +1,7 @@
 import { Container,Group,ActionIcon,Input,Button,createStyles,Modal,Text,UnstyledButton,Badge, Center,Space, SimpleGrid, Card,Loader  } from "@mantine/core";
 import { useState,useEffect,useRef  } from "react";
 import { sendMessage } from "@/utils/openai";
-import { UserMessage,GPTMessage } from "./message";
+import { UserMessage,GPTMessage } from "../message";
 import { IconTrashFilled,IconArrowBigRightFilled,} from "@tabler/icons-react";
 import { AlertTriangle,BorderBottom,FreeRights, Tex } from "tabler-icons-react";
 const useStyles = createStyles((theme) => ({
